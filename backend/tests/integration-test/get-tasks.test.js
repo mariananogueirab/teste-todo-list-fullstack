@@ -52,7 +52,6 @@ describe('GET /tasks', () => {
       response = await chai.request(app)
           .get('/tasks')
           .set('authorization', token.body.token);
-      console.log(response);
     });
 
     it('recebe o status 404', () => {

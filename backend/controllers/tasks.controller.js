@@ -1,5 +1,5 @@
 const {taskCreate} = require('../services/tasks.services');
-const { created } = require('../utils/dictionary/statusCode');
+const {created} = require('../utils/dictionary/statusCode');
 
 const createTask = async (req, res, next) => {
   try {

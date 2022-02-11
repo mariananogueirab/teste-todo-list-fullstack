@@ -11,11 +11,10 @@ const create = async (user) => {
   return insertedId;
 };
 
-const findUser = async (user) => {
+const findUser = async (email) => {
   const db = await connect();
-  const {username, email} = user;
   const userFound = await db.collection(DB_COLLECTION)
-      .findOne({username, email});
+      .findOne({email});
   return userFound;
 };
 

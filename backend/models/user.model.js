@@ -13,9 +13,9 @@ const create = async (user) => {
 
 const findUser = async (user) => {
   const db = await connect();
-  const {username, email, password} = user;
+  const {username, email} = user;
   const userFound = await db.collection(DB_COLLECTION)
-      .find({username, email, password});
+      .findOne({username, email});
   return userFound;
 };
 

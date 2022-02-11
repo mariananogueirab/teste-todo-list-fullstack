@@ -15,7 +15,7 @@ chai.use(chaiHttp);
 
 const {expect} = chai;
 
-describe('GET /tasks', () => {
+describe('GET /tasks/alphabetical', () => {
   let response;
   let token;
   const DBServer = new MongoMemoryServer();
@@ -50,7 +50,7 @@ describe('GET /tasks', () => {
 
     before( async () => {
       response = await chai.request(app)
-          .get('/tasks')
+          .get('/tasks/alphabetical')
           .set('authorization', token.body.token);
     });
 
@@ -86,7 +86,7 @@ describe('GET /tasks', () => {
       );
 
       response = await chai.request(app)
-          .get('/tasks')
+          .get('/tasks/alphabetical')
           .set('authorization', token.body.token);
     });
 
@@ -100,6 +100,11 @@ describe('GET /tasks', () => {
 
     it('retorna um array', () => {
       expect(response.body).to.have.length(3);
+    });
+
+    it('a primeira tarefa é "Aplicar para vaga de backend X"', () => {
+      expect(response.body[0].task).to.be
+          .equal('Aplicar para vaga de backend X');
     });
   });
 });

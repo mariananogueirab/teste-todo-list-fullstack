@@ -1,7 +1,10 @@
 const Joi = require('joi');
 const {findUser} = require('../models/user.model');
-const {userAlreadyRegistered, incorrectData} = require('../utils/dictionary/messagesDefault');
-const {badRequest, conflict, unauthorized} = require('../utils/dictionary/statusCode');
+const {incorrectData} = require('../utils/dictionary/messagesDefault');
+const {
+  badRequest,
+  unauthorized,
+} = require('../utils/dictionary/statusCode');
 const errorHandling = require('../utils/functions/errorHandling');
 const {generateToken} = require('./authService');
 
@@ -20,6 +23,7 @@ const validateLogin = (email, password) => {
 
 const getUser = async (user) => {
   const {email, password} = user;
+  validateLogin(email, password);
   const userFound = await findUser(email);
   if (!userFound || userFound.password !== password) {
     throw errorHandling(unauthorized, incorrectData);

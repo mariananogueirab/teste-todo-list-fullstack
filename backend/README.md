@@ -43,3 +43,7 @@ A requisição para a criação de uma tarefa seguirá o formato:
   "password": "mari123"
 }
 ```
+
+- A requisição para o retorno de todas as tarefas de um usuário retornará um array de objetos, através da rota `/tasks`;
+
+- A requisição para o retorno de todas as tarefas de um usuário em ordem alfabética retornará um array de objetos, através da rota `/tasks/alphabetical`;

@@ -13,8 +13,13 @@ const create = async (newTask) => {
   return insertedId;
 };
 
-
+const getAll = async (user) => {
+  const db = await connect();
+  const tasks = await db.collection(DB_COLLECTION).find({user}).toArray();
+  return tasks;
+};
 
 module.exports = {
   create,
+  getAll,
 };

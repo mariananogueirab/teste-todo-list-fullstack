@@ -8,12 +8,13 @@ const {MongoClient} = require('mongodb');
 const {MongoMemoryServer} = require('mongodb-memory-server');
 const app = require('../../index');
 const users = require('../utils/users');
+const login = require('../utils/login');
 
 chai.use(chaiHttp);
 
 const {expect} = chai;
 
-describe('POST /user', () => {
+describe('POST /login', () => {
   let response = {};
 
   const DBServer = new MongoMemoryServer();
@@ -27,6 +28,10 @@ describe('POST /user', () => {
 
     sinon.stub(MongoClient, 'connect')
         .resolves(connectionMock);
+
+    await chai.request(app)
+        .post('/user')
+        .send(users[0]);
   });
 
   after(async () => {
@@ -34,15 +39,15 @@ describe('POST /user', () => {
     await DBServer.stop();
   });
 
-  describe('quando o usuário é criado com sucesso', () => {
+  describe('Quando o login é realizado com sucesso', () => {
     before(async () => {
       response = await chai.request(app)
-          .post('/user')
-          .send(users[0]);
+          .post('/login')
+          .send(login[0]);
     });
 
-    it('retorna o código de status 201', () => {
-      expect(response).to.have.status(201);
+    it('retorna o código de status 200', () => {
+      expect(response).to.have.status(200);
     });
 
     it('retorna um objeto', () => {
@@ -54,39 +59,11 @@ describe('POST /user', () => {
     });
   });
 
-  describe('Quando o username não é passado', () => {
-    before(async () => {
-      response = await chai.request(app)
-          .post('/user')
-          .send(users[1]);
-    });
-
-    it('recebe o status 400', () => {
-      expect(response).to.have.status(400);
-    });
-
-    it('retorna um objeto', () => {
-      expect(response.body).to.be.a('object');
-    });
-
-    it('o objeto possui a propriedade "message"', () => {
-      expect(response.body).to.have.property('message');
-    });
-
-    it(
-        'a propriedade "message" possui o texto "\"username\" is required"',
-        () => {
-          expect(response.body.message)
-              .to.be.equal('"username" is required');
-        },
-    );
-  });
-
   describe('Quando o email não é passado', () => {
     before(async () => {
       response = await chai.request(app)
-          .post('/user')
-          .send(users[2]);
+          .post('/login')
+          .send(login[1]);
     });
 
     it('recebe o status 400', () => {
@@ -113,8 +90,8 @@ describe('POST /user', () => {
   describe('Quando o password não é passado', () => {
     before(async () => {
       response = await chai.request(app)
-          .post('/user')
-          .send(users[3]);
+          .post('/login')
+          .send(login[2]);
     });
 
     it('recebe o status 400', () => {
@@ -139,41 +116,11 @@ describe('POST /user', () => {
   });
 
   describe('Quando o payload é inválido', () => {
-    describe('quando o username tem menos do que 5 caracteres', () => {
-      before(async () => {
-        response = await chai.request(app)
-            .post('/user')
-            .send(users[4]);
-      });
-
-      it('recebe o status 400', () => {
-        expect(response).to.have.status(400);
-      });
-
-      it('retorna um objeto', () => {
-        expect(response.body).to.be.a('object');
-      });
-
-      it('o objeto possui a propriedade "message"', () => {
-        expect(response.body).to.have.property('message');
-      });
-
-      it(
-          `"message" possui o texto
-           ""username" length must be at least 5 characters long"`,
-          () => {
-            expect(response.body.message)
-                .to.be
-                .equal( '"username" length must be at least 5 characters long');
-          },
-      );
-    });
-
     describe('quando o email é inválido', () => {
       before(async () => {
         response = await chai.request(app)
-            .post('/user')
-            .send(users[5]);
+            .post('/login')
+            .send(login[3]);
       });
 
       it('recebe o status 400', () => {
@@ -201,8 +148,8 @@ describe('POST /user', () => {
     describe('quando o password é inválido', () => {
       before(async () => {
         response = await chai.request(app)
-            .post('/user')
-            .send(users[6]);
+            .post('/login')
+            .send(login[4]);
       });
 
       it('recebe o status 400', () => {
@@ -229,19 +176,15 @@ describe('POST /user', () => {
     });
   });
 
-  describe('Quando o usuário já está cadastrado', () => {
+  describe('Quando o usuário não é encontrado', () => {
     before(async () => {
       response = await chai.request(app)
-          .post('/user')
-          .send(users[0]);
-
-      await chai.request(app)
-          .post('/user')
-          .send(users[1]);
+          .post('/login')
+          .send(login[5]);
     });
 
-    it('recebe o status 409', () => {
-      expect(response).to.have.status(409);
+    it('recebe o status 401', () => {
+      expect(response).to.have.status(401);
     });
 
     it('retorna um objeto', () => {
@@ -253,10 +196,10 @@ describe('POST /user', () => {
     });
 
     it(
-        'a propriedade "message" possui o texto "User already registered"',
+        'a propriedade "message" possui o texto "Incorrect login"',
         () => {
           expect(response.body.message)
-              .to.be.equal('User already registered');
+              .to.be.equal('Incorrect login');
         },
     );
   });

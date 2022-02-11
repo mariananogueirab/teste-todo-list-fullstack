@@ -1,4 +1,4 @@
-const {create} = require('../models/tasks.model');
+const {create, getAll} = require('../models/tasks.model');
 const {badRequest} = require('../utils/dictionary/statusCode');
 const Joi = require('joi').extend(require('@hapi/joi-date'));
 const errorHandling = require('../utils/functions/errorHandling');
@@ -23,6 +23,12 @@ const taskCreate = async (newTask) => {
   return id;
 };
 
+const findTasks = async (user) => {
+  const tasks = await getAll(user);
+  return tasks;
+};
+
 module.exports = {
   taskCreate,
+  findTasks,
 };

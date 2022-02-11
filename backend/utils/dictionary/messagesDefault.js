@@ -4,4 +4,5 @@ module.exports = {
   jwtMalformed: 'Expired or invalid token',
   userNotFound: 'User does not exist',
   missingAuth: 'Token not found',
+  incorrectData: 'Incorrect login',
 };

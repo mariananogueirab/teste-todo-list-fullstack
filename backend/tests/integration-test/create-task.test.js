@@ -15,7 +15,7 @@ chai.use(chaiHttp);
 
 const {expect} = chai;
 
-describe('POST /user', () => {
+describe('POST /tasks', () => {
   let response;
 
   const DBServer = new MongoMemoryServer();

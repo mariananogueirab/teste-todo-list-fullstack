@@ -1,5 +1,6 @@
 const {create, getAll} = require('../models/tasks.model');
-const {badRequest} = require('../utils/dictionary/statusCode');
+const {noTasksYet} = require('../utils/dictionary/messagesDefault');
+const {badRequest, notFound} = require('../utils/dictionary/statusCode');
 const Joi = require('joi').extend(require('@hapi/joi-date'));
 const errorHandling = require('../utils/functions/errorHandling');
 
@@ -25,6 +26,9 @@ const taskCreate = async (newTask) => {
 
 const findTasks = async (user) => {
   const tasks = await getAll(user);
+
+  if (tasks.length == 0) throw errorHandling(notFound, noTasksYet);
+
   return tasks;
 };
 

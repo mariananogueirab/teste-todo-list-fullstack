@@ -1,5 +1,5 @@
-const {taskCreate} = require('../services/tasks.services');
-const {created} = require('../utils/dictionary/statusCode');
+const {taskCreate, findTasks} = require('../services/tasks.services');
+const {created, success} = require('../utils/dictionary/statusCode');
 
 const createTask = async (req, res, next) => {
   const {user} = req;
@@ -16,6 +16,17 @@ const createTask = async (req, res, next) => {
   }
 };
 
+const getTasks = async (req, res, next) => {
+  const {user} = req;
+  try {
+    const tasks = await findTasks(user.email);
+    return res.status(success).json(tasks);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createTask,
+  getTasks,
 };

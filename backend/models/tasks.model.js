@@ -15,11 +15,23 @@ const create = async (newTask) => {
 
 const getAll = async (user) => {
   const db = await connect();
-  const tasks = await db.collection(DB_COLLECTION).find({user}).toArray();
+  const tasks = await db.collection(DB_COLLECTION)
+      .find({user})
+      .toArray();
+  return tasks;
+};
+
+const getAllByAlphab = async (user) => {
+  const db = await connect();
+  const tasks = await db.collection(DB_COLLECTION)
+      .find({user})
+      .sort({task: 1})
+      .toArray();
   return tasks;
 };
 
 module.exports = {
   create,
   getAll,
+  getAllByAlphab,
 };

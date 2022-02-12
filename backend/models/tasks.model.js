@@ -30,11 +30,27 @@ const getAllByAlphab = async (user) => {
   return tasks;
 };
 
-const getAllByLimitDate = async (user) => {
+const getAllByDate = async (user) => {
   const db = await connect();
   const tasks = await db.collection(DB_COLLECTION)
       .find({user})
-      .sort({limitDate: 1})
+      .sort({createdDate: 1})
+      .toArray();
+  return tasks;
+};
+
+const getAllCompleted = async (user) => {
+  const db = await connect();
+  const tasks = await db.collection(DB_COLLECTION)
+      .find({user, completed: 'true'})
+      .toArray();
+  return tasks;
+};
+
+const getAllNotCompleted = async (user) => {
+  const db = await connect();
+  const tasks = await db.collection(DB_COLLECTION)
+      .find({user, completed: 'false'})
       .toArray();
   return tasks;
 };
@@ -43,5 +59,7 @@ module.exports = {
   create,
   getAll,
   getAllByAlphab,
-  getAllByLimitDate,
+  getAllByDate,
+  getAllCompleted,
+  getAllNotCompleted,
 };

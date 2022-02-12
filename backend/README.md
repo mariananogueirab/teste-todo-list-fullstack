@@ -47,3 +47,5 @@ A requisição para a criação de uma tarefa seguirá o formato:
 - A requisição para o retorno de todas as tarefas de um usuário retornará um array de objetos, através da rota `/tasks`;
 
 - A requisição para o retorno de todas as tarefas de um usuário em ordem alfabética retornará um array de objetos, através da rota `/tasks/alphabetical`;
+
+- A requisição para o retorno de todas as tarefas de um usuário em ordem de data limite para a realização de uma tarefa, retornará um array de objetos, através da rota `/tasks/limit-date`;

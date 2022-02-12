@@ -2,7 +2,9 @@ const {
   taskCreate,
   findTasks,
   findTasksByAlphab,
-  findTasksByLimitDate,
+  findTasksByDate,
+  findTasksCompleted,
+  findTasksNotCompleted,
 } = require('../services/tasks.services');
 const {created, success} = require('../utils/dictionary/statusCode');
 
@@ -41,10 +43,30 @@ const getTasksByAlphab = async (req, res, next) => {
   }
 };
 
-const getTasksByLimitDate = async (req, res, next) => {
+const getTasksByDate = async (req, res, next) => {
   const {user} = req;
   try {
-    const tasks = await findTasksByLimitDate(user.email);
+    const tasks = await findTasksByDate(user.email);
+    return res.status(success).json(tasks);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getTasksCompleted = async (req, res, next) => {
+  const {user} = req;
+  try {
+    const tasks = await findTasksCompleted(user.email);
+    return res.status(success).json(tasks);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getTasksNotCompleted = async (req, res, next) => {
+  const {user} = req;
+  try {
+    const tasks = await findTasksNotCompleted(user.email);
     return res.status(success).json(tasks);
   } catch (error) {
     next(error);
@@ -55,5 +77,7 @@ module.exports = {
   createTask,
   getTasks,
   getTasksByAlphab,
-  getTasksByLimitDate,
+  getTasksByDate,
+  getTasksCompleted,
+  getTasksNotCompleted,
 };

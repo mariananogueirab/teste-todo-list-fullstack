@@ -3,6 +3,7 @@ const {
   createTask,
   getTasks,
   getTasksByAlphab,
+  getTasksByLimitDate,
 } = require('../controllers/tasks.controller');
 const auth = require('../middlewares/auth');
 
@@ -11,6 +12,7 @@ const router = express.Router();
 
 router.post('/', auth, createTask);
 router.get('/alphabetical', auth, getTasksByAlphab);
+router.get('/limit-date', auth, getTasksByLimitDate);
 router.get('/', auth, getTasks);
 
 module.exports = router;

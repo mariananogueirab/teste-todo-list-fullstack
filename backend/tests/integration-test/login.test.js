@@ -5,7 +5,7 @@ const {
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 const {MongoClient} = require('mongodb');
-const {MongoMemoryServer} = require('mongodb-memory-server');
+const {getConnection} = require('./connectionMock');
 const app = require('../../index');
 const users = require('../utils/users');
 const login = require('../utils/login');
@@ -17,14 +17,8 @@ const {expect} = chai;
 describe('POST /login', () => {
   let response = {};
 
-  const DBServer = new MongoMemoryServer();
-
   before(async () => {
-    const URLMock = await DBServer.getUri();
-    const connectionMock = await MongoClient.connect(
-        URLMock,
-        {useNewUrlParser: true, useUnifiedTopology: true},
-    );
+    const connectionMock = await getConnection();
 
     sinon.stub(MongoClient, 'connect')
         .resolves(connectionMock);
@@ -36,7 +30,6 @@ describe('POST /login', () => {
 
   after(async () => {
     MongoClient.connect.restore();
-    await DBServer.stop();
   });
 
   describe('Quando o login é realizado com sucesso', () => {

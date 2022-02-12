@@ -6,6 +6,7 @@ const {
   findTasksByStatus,
   taskUpdate,
   taskCompletedUpdate,
+  taskDeleted,
 } = require('../services/tasks.services');
 const {created, success} = require('../utils/dictionary/statusCode');
 
@@ -87,6 +88,18 @@ const updateCompletedTask = async (req, res, next) => {
   }
 };
 
+const taskDelete = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const task = await taskDeleted(id);
+
+    return res.status(success).json(task);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 module.exports = {
   createTask,
   getTasks,
@@ -95,4 +108,5 @@ module.exports = {
   getTasksByStatus,
   update,
   updateCompletedTask,
+  taskDelete,
 };

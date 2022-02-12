@@ -3,8 +3,9 @@ const {
   findTasks,
   findTasksByAlphab,
   findTasksByDate,
-  findTasksCompleted,
-  findTasksNotCompleted,
+  findTasksByStatus,
+  taskUpdate,
+  taskCompletedUpdate,
 } = require('../services/tasks.services');
 const {created, success} = require('../utils/dictionary/statusCode');
 
@@ -53,21 +54,34 @@ const getTasksByDate = async (req, res, next) => {
   }
 };
 
-const getTasksCompleted = async (req, res, next) => {
+const getTasksByStatus = async (req, res, next) => {
   const {user} = req;
   try {
-    const tasks = await findTasksCompleted(user.email);
+    const tasks = await findTasksByStatus(user.email);
     return res.status(success).json(tasks);
   } catch (error) {
     next(error);
   }
 };
 
-const getTasksNotCompleted = async (req, res, next) => {
-  const {user} = req;
+const update = async (req, res, next) => {
   try {
-    const tasks = await findTasksNotCompleted(user.email);
-    return res.status(success).json(tasks);
+    const {user} = req;
+    const {id} = req.params;
+    const task = await taskUpdate({...req.body, user: user.email, id});
+
+    return res.status(success).json(task);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateCompletedTask = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const task = await taskCompletedUpdate(id);
+
+    return res.status(success).json(task);
   } catch (error) {
     next(error);
   }
@@ -78,6 +92,7 @@ module.exports = {
   getTasks,
   getTasksByAlphab,
   getTasksByDate,
-  getTasksCompleted,
-  getTasksNotCompleted,
+  getTasksByStatus,
+  update,
+  updateCompletedTask,
 };

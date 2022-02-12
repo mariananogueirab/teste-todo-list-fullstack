@@ -1,3 +1,4 @@
+const {ObjectId} = require('mongodb');
 const connect = require('./connection');
 
 const DB_COLLECTION = 'Tasks';
@@ -39,20 +40,46 @@ const getAllByDate = async (user) => {
   return tasks;
 };
 
-const getAllCompleted = async (user) => {
+const getAllByStatus = async (user) => {
   const db = await connect();
   const tasks = await db.collection(DB_COLLECTION)
-      .find({user, completed: 'true'})
+      .find({user})
+      .sort({completed: 1})
       .toArray();
   return tasks;
 };
 
-const getAllNotCompleted = async (user) => {
+const findTaskById = async (id) => {
   const db = await connect();
-  const tasks = await db.collection(DB_COLLECTION)
-      .find({user, completed: 'false'})
-      .toArray();
-  return tasks;
+  const task = await db.collection(DB_COLLECTION)
+      .findOne({_id: ObjectId(id)});
+
+  return task;
+};
+
+const updateTask = async (updatedTask) => {
+  const {task, limitDate, user, id} = updatedTask;
+  const db = await connect();
+  await db.collection(DB_COLLECTION)
+      .updateOne({_id: ObjectId(id)}, {
+        $set: {
+          task, limitDate, user,
+        },
+      });
+  const newTask = await findTaskById(id);
+  return newTask;
+};
+
+const updateTaskCompleted = async (id) => {
+  const db = await connect();
+  await db.collection(DB_COLLECTION)
+      .updateOne({_id: ObjectId(id)}, {
+        $set: {
+          completed: 'true',
+        },
+      });
+  const newTask = await findTaskById(id);
+  return newTask;
 };
 
 module.exports = {
@@ -60,6 +87,7 @@ module.exports = {
   getAll,
   getAllByAlphab,
   getAllByDate,
-  getAllCompleted,
-  getAllNotCompleted,
+  getAllByStatus,
+  updateTask,
+  updateTaskCompleted,
 };

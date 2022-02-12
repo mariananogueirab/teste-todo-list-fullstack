@@ -6,4 +6,5 @@ module.exports = {
   missingAuth: 'Token not found',
   incorrectData: 'Incorrect login',
   noTasksYet: 'No tasks yet',
+  taskNotFound: 'Task not found',
 };

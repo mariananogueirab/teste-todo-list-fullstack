@@ -5,10 +5,10 @@ module.exports = [
   },
   {
     'task': 'Entregar projeto Trybe',
-    'limitDate': '15/03/2022',
+    'limitDate': '15/02/2022',
   },
   {
     'task': 'Aplicar para vaga de backend X',
-    'limitDate': '15/03/2022',
+    'limitDate': '20/02/2022',
   },
 ];

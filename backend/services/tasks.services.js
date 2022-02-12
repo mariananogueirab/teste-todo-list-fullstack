@@ -18,7 +18,7 @@ const errorHandling = require('../utils/functions/errorHandling');
 
 const taskSchema = Joi.object({
   task: Joi.string().min(5).required(),
-  limitDate: Joi.date().format('YYYY-MM-DD'),
+  limitDate: Joi.date().format('DD/MM/YYYY'),
 });
 
 const taskValidate = (task, limitDate) => {

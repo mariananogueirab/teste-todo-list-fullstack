@@ -6,6 +6,7 @@ const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 const {MongoClient} = require('mongodb');
 const {MongoMemoryServer} = require('mongodb-memory-server');
+const {getConnection} = require('./connectionMock');
 const app = require('../../index');
 const getTasks = require('../utils/getTasks');
 const users = require('../utils/users');
@@ -18,6 +19,7 @@ const {expect} = chai;
 describe('GET /tasks', () => {
   let response;
   let token;
+
   const DBServer = new MongoMemoryServer();
 
   before(async () => {

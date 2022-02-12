@@ -6,6 +6,7 @@ const {
   getAllByStatus,
   updateTask,
   updateTaskCompleted,
+  deleteTask,
 } = require('../models/tasks.model');
 const {
   noTasksYet,
@@ -83,6 +84,12 @@ const taskCompletedUpdate = async (id) => {
   return newTask;
 };
 
+const taskDeleted = async (id) => {
+  const task = await deleteTask(id);
+  if (!task) throw errorHandling(notFound, taskNotFound);
+  return task;
+};
+
 module.exports = {
   taskCreate,
   findTasks,
@@ -91,4 +98,5 @@ module.exports = {
   findTasksByStatus,
   taskUpdate,
   taskCompletedUpdate,
+  taskDeleted,
 };

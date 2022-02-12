@@ -3,7 +3,9 @@ const {
   createTask,
   getTasks,
   getTasksByAlphab,
-  getTasksByLimitDate,
+  getTasksByDate,
+  getTasksCompleted,
+  getTasksNotCompleted,
 } = require('../controllers/tasks.controller');
 const auth = require('../middlewares/auth');
 
@@ -12,7 +14,9 @@ const router = express.Router();
 
 router.post('/', auth, createTask);
 router.get('/alphabetical', auth, getTasksByAlphab);
-router.get('/limit-date', auth, getTasksByLimitDate);
+router.get('/date', auth, getTasksByDate);
+router.get('/completed', auth, getTasksCompleted);
+router.get('/not-completed', auth, getTasksNotCompleted);
 router.get('/', auth, getTasks);
 
 module.exports = router;

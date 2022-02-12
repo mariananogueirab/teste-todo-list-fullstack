@@ -5,7 +5,7 @@ const {
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 const {MongoClient} = require('mongodb');
-const {MongoMemoryServer} = require('mongodb-memory-server');
+const {getConnection} = require('./connectionMock');
 const app = require('../../index');
 const getTasks = require('../utils/getTasks');
 const users = require('../utils/users');
@@ -18,18 +18,12 @@ const {expect} = chai;
 describe('GET /tasks/alphabetical', () => {
   let response;
   let token;
-  const DBServer = new MongoMemoryServer();
 
   before(async () => {
-    const URLMock = await DBServer.getUri();
-    const connectionMock = await MongoClient.connect(
-        URLMock,
-        {useNewUrlParser: true, useUnifiedTopology: true},
-    );
+    const connectionMock = await getConnection();
 
     sinon.stub(MongoClient, 'connect')
         .resolves(connectionMock);
-
 
     await chai.request(app)
         .post('/user')
@@ -42,7 +36,6 @@ describe('GET /tasks/alphabetical', () => {
 
   after(async () => {
     MongoClient.connect.restore();
-    await DBServer.stop();
   });
 
   describe('Quando não há tarefas cadastradas', () => {

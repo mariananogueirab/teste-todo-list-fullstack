@@ -1,64 +1,64 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import React, { useContext, useState } from 'react';
+/* import { useHistory } from 'react-router-dom'; */
 import Button from './Button';
 import Input from './Input';
+import api from '../api';
+import UserContext from '../context/UserContext';
 
 function Login() {
   const [login, setLogin] = useState({
     email: '',
     password: '',
-  }); // Criei um estado local, porque ainda não tem nada sobre estado global.
+  });
 
-  const history = useHistory();
-  // só jogando o hook useHistory em uma constante pra pegar o histórico
+  const { setUsername } = useContext(UserContext);
 
-/*   useEffect(() => {
-    function handleValidation() { // valida o email e a senha
-      const emailPath = /^[^\s@]+@[^\s@]+\.[^\s@]+$/g; // regex retirado de projetos anteriores.
-      const MIN_LENGTH_PSSW = 6;
-      if (emailPath.test(login.email) && login.password.length > MIN_LENGTH_PSSW) {
-        setEnable((prevState) => !prevState);
-      }
+  /* const history = useHistory(); */
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await api.post('/login', login);
+      localStorage.setItem('authorization', response.data.token);
+      setUsername(response.data.username);
+    } catch (error) {
+      alert(error);
     }
-    handleValidation();
-  }, [login.email, login.password]); /// BUG
- */
-  function handleButtonLogin() {
 
-
-    history.push('/comidas'); // redirecionando pra página de comidas
-  }
+    /* history.push('/profile'); */
+  };
 
   return (
     <div className="Div-Inputs">
       <h1>Login</h1>
-      <Input
-        label="E-mail"
-        className="inputLogin"
-        type="email"
-        testid="email-input"
-        value={ login.email }
-        onChange={ ({ target }) => {
-          setLogin({ ...login, email: target.value });
-        } }
-      />
-      <Input
-        label="Senha"
-        className="inputLogin"
-        type="password"
-        testid="password-input"
-        value={ login.password }
-        onChange={ ({ target }) => {
-          setLogin({ ...login, password: target.value });
-        } }
-      />
-      <Button
-        className="Button-Entrar"
-        testid="login-submit-btn"
-        disabled={ enableButton }
-        onClick={ handleButtonLogin }
-        label="Entrar"
-      />
+      <form onSubmit={handleLogin}>
+        <Input
+          label="E-mail"
+          className="inputLogin"
+          type="email"
+          testid="email-input"
+          value={login.email}
+          onChange={({ target }) => {
+            setLogin({ ...login, email: target.value });
+          }}
+        />
+        <Input
+          label="Senha"
+          className="inputLogin"
+          type="password"
+          testid="password-input"
+          value={login.password}
+          onChange={({ target }) => {
+            setLogin({ ...login, password: target.value });
+          }}
+        />
+        <Button
+          className="Button-Entrar"
+          testid="login-submit-btn"
+          label="Entrar"
+        />
+      </form>
     </div>
   );
 }

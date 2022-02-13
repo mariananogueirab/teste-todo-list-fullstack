@@ -1,76 +1,72 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import Button from './Button';
 import Input from './Input';
-import '../styles/Login.css';
-import logo from '../images/logo.png';
+import api from '../api';
 
-function Login() {
-  const [login, setLogin] = useState({
+function Register() {
+  const [register, setRegister] = useState({
     username: '',
     email: '',
     password: '',
-  }); // Criei um estado local, porque ainda não tem nada sobre estado global.
+  });
 
   const history = useHistory();
-  // só jogando o hook useHistory em uma constante pra pegar o histórico
 
-  /*   useEffect(() => {
-    function handleValidation() { // valida o email e a senha
-      const emailPath = /^[^\s@]+@[^\s@]+\.[^\s@]+$/g; // regex retirado de projetos anteriores.
-      const MIN_LENGTH_PSSW = 6;
-      if (emailPath.test(login.email) && login.password.length > MIN_LENGTH_PSSW) {
-        setEnable((prevState) => !prevState);
-      }
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    try {
+      await api.post('/user', register);
+      await api.post('/login', { email: register.email, password: register.password });
+      history.push('/profile');
+    } catch (error) {
+      alert(error);
     }
-    handleValidation();
-  }, [login.email, login.password]); /// BUG */
-
-  function handleButtonLogin() {
-    history.push('/comidas'); // redirecionando pra página de comidas
-  }
+  };
 
   return (
     <div className="Div-Inputs">
       <h1>Register</h1>
-      <Input
-        label="Username"
-        className="inputLogin"
-        type="text"
-        testid="email-input"
-        value={login.email}
-        onChange={({ target }) => {
-          setLogin({ ...login, email: target.value });
-        }}
-      />
-      <Input
-        label="E-mail"
-        className="inputLogin"
-        type="email"
-        testid="email-input"
-        value={login.email}
-        onChange={({ target }) => {
-          setLogin({ ...login, email: target.value });
-        }}
-      />
-      <Input
-        label="Senha"
-        className="inputLogin"
-        type="password"
-        testid="password-input"
-        value={login.password}
-        onChange={({ target }) => {
-          setLogin({ ...login, password: target.value });
-        }}
-      />
-      <Button
-        className="Button-Entrar"
-        testid="login-submit-btn"
-        onClick={handleButtonLogin}
-        label="Entrar"
-      />
+      <form onSubmit={handleRegister}>
+        <Input
+          label="Username"
+          className="inputLogin"
+          type="text"
+          testid="username-input"
+          value={register.username}
+          onChange={({ target }) => {
+            setRegister({ ...register, username: target.value });
+          }}
+        />
+        <Input
+          label="E-mail"
+          className="inputLogin"
+          type="email"
+          testid="email-input"
+          value={register.email}
+          onChange={({ target }) => {
+            setRegister({ ...register, email: target.value });
+          }}
+        />
+        <Input
+          label="Password"
+          className="inputLogin"
+          type="password"
+          testid="password-input"
+          value={register.password}
+          onChange={({ target }) => {
+            setRegister({ ...register, password: target.value });
+          }}
+        />
+        <Button
+          className="Button-Entrar"
+          testid="register-submit-btn"
+          label="Entrar"
+        />
+      </form>
     </div>
   );
 }
 
-export default Login;
+export default Register;

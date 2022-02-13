@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Button from './Button';
 import Input from './Input';
 import api from '../api';
@@ -13,7 +13,7 @@ function Login() {
 
   const { setUsername } = useContext(UserContext);
 
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,7 +22,7 @@ function Login() {
       const response = await api.post('/login', login);
       localStorage.setItem('authorization', response.data.token);
       setUsername(response.data.username);
-      navigate('/profile');
+      history.push('/profile');
     } catch (error) {
       alert(error);
     }

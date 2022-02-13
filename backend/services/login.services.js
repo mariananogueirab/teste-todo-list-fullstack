@@ -34,7 +34,9 @@ const getUser = async (user) => {
   const {password: _password, ...userWithoutPassword} = userFound;
 
   const token = generateToken(userWithoutPassword);
-  return token;
+
+  const {username} = userFound;
+  return {token, username};
 };
 
 module.exports = {

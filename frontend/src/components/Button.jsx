@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Button({ testid, disabled, onClick, label, className }) {
+function Button({
+  testid, disabled, onClick, label, className,
+}) {
   return (
     <button
       type="submit"
-      data-testid={ testid }
-      disabled={ disabled }
-      onClick={ onClick }
-      className={ className }
+      data-testid={testid}
+      disabled={disabled}
+      onClick={onClick}
+      className={className}
     >
       {label}
     </button>

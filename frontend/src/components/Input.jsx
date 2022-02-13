@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Input({ type, onChange, testid, value, label, className }) {
+function Input({
+  type, onChange, testid, value, label, className,
+}) {
   return (
-    <div className={ className }>
-      <label className="label-inputs" htmlFor={ testid }>
+    <div className={className}>
+      <label className="label-inputs" htmlFor={testid}>
         {label}
         <input
-          type={ type }
-          value={ value }
-          data-testid={ testid }
-          onChange={ onChange }
-          id={ testid }
+          type={type}
+          value={value}
+          data-testid={testid}
+          onChange={onChange}
+          id={testid}
         />
       </label>
     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import GetIn from './pages/GetIn';
 import UserProvider from './context/User.Provider';
@@ -9,11 +9,11 @@ function App() {
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <UserProvider>
-      <Switch>
+      <Routes>
         <Route exact path="/" component={Home} />
         <Route exact path="/get-in" component={GetIn} />
         <Route exact path="/profile" component={Profile} />
-      </Switch>
+      </Routes>
     </UserProvider>
   );
 }

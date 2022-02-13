@@ -31,8 +31,7 @@ const userCreate = async (user) => {
   const passwordEncript = await bcrypt.hash(password, 10);
 
   const userEncrypt = {username, email, passwordEncript};
-  /* const comp = await bcrypt.compare(password, newPassword);
-  console.log('compare: ', comp); */
+
   await validateUserAlreadyExists(email);
   await create(userEncrypt);
 

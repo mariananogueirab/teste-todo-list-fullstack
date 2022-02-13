@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import Input from './Input';
 import api from '../api';
@@ -11,15 +11,15 @@ function Register() {
     password: '',
   });
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
     try {
       await api.post('/user', register);
-      /* await api.post('/login', { email: register.email, password: register.password }); */
-      history.push('/profile');
+      await api.post('/login', { email: register.email, password: register.password });
+      navigate('/profile');
     } catch (error) {
       alert(error);
     }

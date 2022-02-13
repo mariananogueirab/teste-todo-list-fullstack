@@ -1,10 +1,10 @@
 import React from 'react';
 
-function Home() {
+function GetIn() {
   return (
     <div>
-      HOME
+      GetIn
     </div>
   );
 }
-export default Home;
+export default GetIn;

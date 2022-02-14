@@ -35,7 +35,7 @@ const getAllByDate = async (user) => {
   const db = await connect();
   const tasks = await db.collection(DB_COLLECTION)
       .find({user})
-      .sort({createdDate: 1})
+      .sort({createdDate: -1}) // mais recentes primeiro
       .toArray();
   return tasks;
 };

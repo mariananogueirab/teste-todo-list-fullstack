@@ -55,7 +55,7 @@ As requisições serão feitas através da rota `/tasks`.
 
 - A requisição para o retorno de todas as tarefas de um usuário em ordem alfabética retornará um array de objetos, através da rota `/tasks/alphabetical`;
 
-- A requisição para o retorno de todas as tarefas de um usuário ordenadas pela data de criação de uma tarefa, retornará um array de objetos, através da rota `/tasks/date`;
+- A requisição para o retorno de todas as tarefas de um usuário ordenadas pela data de criação de uma tarefa, sendo a mais recente no topo, retornará um array de objetos, através da rota `/tasks/date`;
 
 - A requisição para o retorno de todas as tarefas de um usuário ordenadas pelo status de uma tarefa, retornará um array de objetos, através da rota `/tasks/status`. Onde as não realizadas ficarão em cima.
 

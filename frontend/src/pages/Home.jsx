@@ -1,8 +1,8 @@
 import React from 'react';
-import '../styles/home.css';
 import { useHistory } from 'react-router-dom';
 import Button from '../components/Button';
 import logo from '../images/logo.png';
+import '../styles/home.css';
 
 function Home() {
   const history = useHistory();

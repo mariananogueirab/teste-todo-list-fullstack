@@ -20,6 +20,7 @@ function Login() {
 
     try {
       const response = await api.post('/login', login);
+
       localStorage.setItem('authorization', response.data.token);
       setUsername(response.data.username);
       history.push('/profile');

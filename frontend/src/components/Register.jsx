@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from './Button';
 import Input from './Input';
 import api from '../api';
+import UserContext from '../context/UserContext';
 
 function Register() {
   const [register, setRegister] = useState({
@@ -11,6 +12,8 @@ function Register() {
     password: '',
   });
 
+  const { setUsername } = useContext(UserContext);
+
   const history = useHistory();
 
   const handleRegister = async (e) => {
@@ -18,7 +21,9 @@ function Register() {
 
     try {
       await api.post('/user', register);
-      await api.post('/login', { email: register.email, password: register.password });
+      const response = await api.post('/login', { email: register.email, password: register.password });
+      localStorage.setItem('authorization', response.data.token);
+      setUsername(response.data.username);
       history.push('/profile');
     } catch (error) {
       alert(error);

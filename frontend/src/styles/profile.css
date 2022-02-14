@@ -1,0 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15vh;
+  height: 80vh;
+  padding: 15px;
+  background-color: #2b475e;
+}

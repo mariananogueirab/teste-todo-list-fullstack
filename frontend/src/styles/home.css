@@ -4,10 +4,10 @@
 }
 
 .div-home {
-  background-color: #2B475E;
+  background-color: #2b475e;
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
   width: 100vw;
-};
+}

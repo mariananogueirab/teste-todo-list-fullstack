@@ -1,6 +1,6 @@
 .button-get-in {
   background-color: white;
-  color: #FFD43D;
+  color: #ffd43d;
   border: none;
   border-radius: 5px;
   font-weight: 900;
@@ -9,10 +9,29 @@
   padding: 7px;
   width: 170px;
   font-size: x-large;
-};
+}
 
 .button-get-in:hover {
-  background-color: #FFD43D;
+  background-color: #ffd43d;
   color: white;
   cursor: pointer;
-};
+}
+
+.button-login-register {
+  background-color: #2b475e;
+  color: #ffd43d;
+  border: none;
+  border-radius: 5px;
+  font-weight: 900;
+  height: 45px;
+  margin: 20px 0 0;
+  padding: 7px;
+  width: 170px;
+  font-size: x-large;
+}
+
+.button-login-register:hover {
+  background-color: #ffd43d;
+  color: #2b475e;
+  cursor: pointer;
+}

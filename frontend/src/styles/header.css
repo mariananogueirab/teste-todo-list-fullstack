@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+}
+
+.header {
+  height: 20vh;
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 15px;
+  position: fixed;
+  top: 0;
+}
+
+.image-logo {
+  height: 20px;
+  width: 20px;
+}

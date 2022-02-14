@@ -4,6 +4,7 @@ import Button from './Button';
 import Input from './Input';
 import api from '../api';
 import UserContext from '../context/UserContext';
+import '../styles/register-login.css';
 
 function Register() {
   const [register, setRegister] = useState({
@@ -31,12 +32,12 @@ function Register() {
   };
 
   return (
-    <div className="Div-Inputs">
+    <div className="div-register">
       <h1>Register</h1>
-      <form onSubmit={handleRegister}>
+      <form onSubmit={handleRegister} className="form">
         <Input
           label="Username"
-          className="inputLogin"
+          className="input"
           type="text"
           testid="username-input"
           value={register.username}
@@ -46,7 +47,7 @@ function Register() {
         />
         <Input
           label="E-mail"
-          className="inputLogin"
+          className="input"
           type="email"
           testid="email-input"
           value={register.email}
@@ -56,7 +57,7 @@ function Register() {
         />
         <Input
           label="Password"
-          className="inputLogin"
+          className="input"
           type="password"
           testid="password-input"
           value={register.password}
@@ -65,7 +66,7 @@ function Register() {
           }}
         />
         <Button
-          className="Button-Entrar"
+          className="button-login-register"
           testid="register-submit-btn"
           label="Entrar"
         />

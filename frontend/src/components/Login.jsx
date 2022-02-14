@@ -4,6 +4,7 @@ import Button from './Button';
 import Input from './Input';
 import api from '../api';
 import UserContext from '../context/UserContext';
+import '../styles/register-login.css';
 
 function Login() {
   const [login, setLogin] = useState({
@@ -30,14 +31,14 @@ function Login() {
   };
 
   return (
-    <div className="Div-Inputs">
+    <div className="div-login">
       <h1>Login</h1>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} className="form">
         <Input
           label="E-mail"
-          className="inputLogin"
+          className="input"
           type="email"
-          testid="email-input"
+          testid="input-email"
           value={login.email}
           onChange={({ target }) => {
             setLogin({ ...login, email: target.value });
@@ -45,16 +46,16 @@ function Login() {
         />
         <Input
           label="Senha"
-          className="inputLogin"
+          className="input"
           type="password"
-          testid="password-input"
+          testid="input-password"
           value={login.password}
           onChange={({ target }) => {
             setLogin({ ...login, password: target.value });
           }}
         />
         <Button
-          className="Button-Entrar"
+          className="button-login-register"
           testid="login-submit-btn"
           label="Entrar"
         />

@@ -6,16 +6,17 @@ function Input({
 }) {
   return (
     <div className={className}>
-      <label className="label-inputs" htmlFor={testid}>
+      <label className="label" htmlFor={testid}>
         {label}
-        <input
-          type={type}
-          value={value}
-          data-testid={testid}
-          onChange={onChange}
-          id={testid}
-        />
       </label>
+      <input
+        type={type}
+        value={value}
+        data-testid={testid}
+        onChange={onChange}
+        id={testid}
+      />
+
     </div>
   );
 }

@@ -23,15 +23,17 @@ function Input({
 
 Input.propTypes = {
   type: PropTypes.string.isRequired,
-  testid: PropTypes.string.isRequired,
+  testid: PropTypes.string,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 Input.defaultProps = {
   label: undefined,
+  className: undefined,
+  testid: undefined,
 };
 
 export default Input;

@@ -1,7 +1,10 @@
 # Back-end Developer Challenge - Trybe
+
 # To Do List
 
 ## Funcionalidades:
+
+---
 
 Gerar a lista de tarefas;
 Esta lista pode ser ordenável por ordem alfabética, data de criação ou por status;
@@ -10,9 +13,60 @@ Remover uma tarefa da lista;
 Atualizar uma tarefa da lista;
 A tarefa deve possuir um status editável: pendente, em andamento ou pronto;
 
-## Collections:
+---
 
-### Users
+## Como instalar
+
+* Abra um terminal no seu computador e utilize os comandos a baixo na ordem que são apresentados:
+
+  * `cd backend`
+  * `npm install`
+  * `npm start`
+
+  A aplicação está configurada para rodar na porta local 3000.
+
+---
+
+## Modo de utilização
+
+A API consta com 3 rotas: 
+* `/user`
+  * `/` [`POST`]  Cria um novo usuário
+* `/login`
+  * `/` [`POST`]  Faz login
+* `/tasks`
+  * `/` [`POST`]  Cria uma nova tarefa
+  * `/` [`GET`] Exibe todas as tarefas
+  * `/alphabetical` [`GET`] Exibe as tarefas em ordem alfabética
+  * `/date` [`GET`] Exibe as tarefas em ordem de data de criação, sendo a mais recente no topo
+  * `/status` [`GET`]  Exibe as tarefas em ordem de status
+  * `/:id` [`PUT`] Edita uma tarefa
+  * `/completed/:id` [`PUT`] Edita o status de uma tarefa para completa
+  * `/` [`DELETE`] Deleta uma tarefa
+
+---
+
+## Modo de desenvolvimento
+
+---
+
+### Tecnologias
+
+---
+
+Foi utilizado para o desenvolvimento desse projeto o NodeJS com Express para a criação básica da api, Mocha/Chai para a criação dos testes de integração.
+
+---
+
+### Banco de dados
+
+O banco escolhido para a aplicação foi `Mongodb`, pela agilidade no desenvolvimento, facilidade de adição de novas informações sem necessitar re-estruturar toda a estrutura e pela robustes para lidar com grande volume de requisições.
+
+---
+
+#### Collections:
+
+* Users
 
 O banco terá uma coleção chamada `Users`.
 As requisições serão feitas através da rota `/user`.
@@ -36,7 +90,15 @@ A requisição para login seguirá o formato:
 }
 ```
 
-### Tasks
+Estrutura da tabela:
+
+|   username   |  email   |  password   |
+| :----------: | :------: | :---------: |
+|   `string`   | `string` |   `string`  |
+
+---
+
+* Tasks
 
 O banco terá uma coleção chamada `Tasks`.
 As requisições serão feitas através da rota `/tasks`.
@@ -58,24 +120,21 @@ As requisições serão feitas através da rota `/tasks`.
 },
 ```
 
-- A requisição para o retorno de todas as tarefas de um usuário retornará um array de objetos, através da rota `/tasks`;
+Estrutura da tabela:
 
-- A requisição para o retorno de todas as tarefas de um usuário em ordem alfabética retornará um array de objetos, através da rota `/tasks/alphabetical`;
+|   task   |  limitDate   |  createdDate   |  completed  |   user    |
+| :------: | :----------: | :------------: | :---------: | :-------: |
+| `string` |   `string`   |    `object`    |   `boolean` |  `string` |
 
-- A requisição para o retorno de todas as tarefas de um usuário ordenadas pela data de criação de uma tarefa, sendo a mais recente no topo, retornará um array de objetos, através da rota `/tasks/date`;
 
-- A requisição para o retorno de todas as tarefas de um usuário ordenadas pelo status de uma tarefa, retornará um array de objetos, através da rota `/tasks/status`. Onde as não realizadas ficarão em cima.
-
-- A requisição para mudar o status de uma tarefa para completa, será através da rota `/tasks/completed/:id`
-
-- A requisição para deletar uma tarefa, será através da rota `/tasks/:id`
+---
 
 ## Para testar o projeto
 
-Para testar os arquivos separadamente:
+- Para testar os arquivos separadamente, digite no seu terminal:
 
 `NAME=<nome_do_arquivo> npm test`
 
-Para testar todos os arquivos juntos:
+- Para testar todos os arquivos juntos, digite no seu terminal:
 
 `npm test`

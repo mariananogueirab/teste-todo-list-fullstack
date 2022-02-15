@@ -18,11 +18,24 @@ const errorHandling = require('../utils/functions/errorHandling');
 
 const taskSchema = Joi.object({
   task: Joi.string().min(5).required(),
-  limitDate: Joi.date().format('DD/MM/YYYY'),
+  limitDate: Joi.date().format('YYYY-MM-DD'),
+});
+
+const editTaskSchema = Joi.object({
+  task: Joi.string().min(5),
+  limitDate: Joi.date().format('YYYY-MM-DD'),
 });
 
 const taskValidate = (task, limitDate) => {
   const {error} = taskSchema.validate({
+    task, limitDate,
+  });
+
+  if (error) throw errorHandling(badRequest, error.message);
+};
+
+const editTaskValidate = (task, limitDate) => {
+  const {error} = editTaskSchema.validate({
     task, limitDate,
   });
 
@@ -70,7 +83,10 @@ const findTasksByStatus = async (user) => {
 
 const taskUpdate = async (updatedTask) => {
   const {task, limitDate} = updatedTask;
-  taskValidate(task, limitDate);
+  editTaskValidate(task, limitDate);
+  if (task === '' && limitDate === '') {
+    throw errorHandling(badRequest, invalidEntry);
+  };
   const newTask = await updateTask(updatedTask);
   if (!newTask) throw errorHandling(notFound, taskNotFound);
 

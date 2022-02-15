@@ -184,10 +184,10 @@ describe('POST /tasks', () => {
 
       it(
           `a propriedade "message" possui o texto 
-          ""limitDate" must be in DD/MM/YYYY format"`,
+          ""limitDate" must be in YYYY-MM-DD format"`,
           () => {
             expect(response.body.message).to.be
-                .equal('"limitDate" must be in DD/MM/YYYY format');
+                .equal('"limitDate" must be in YYYY-MM-DD format');
           },
       );
     });

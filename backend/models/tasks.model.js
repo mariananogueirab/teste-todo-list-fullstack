@@ -5,11 +5,12 @@ const DB_COLLECTION = 'Tasks';
 
 const create = async (newTask) => {
   const createdDate = new Date();
+  console.log(typeof createdDate)
   const {task, limitDate, user} = newTask;
   const db = await connect();
   const {insertedId} = await db.collection(DB_COLLECTION)
       .insertOne({
-        task, limitDate, createdDate, completed: 'false', user,
+        task, limitDate, createdDate, completed: false, user,
       });
   return insertedId;
 };
@@ -75,7 +76,7 @@ const updateTaskCompleted = async (id) => {
   await db.collection(DB_COLLECTION)
       .updateOne({_id: ObjectId(id)}, {
         $set: {
-          completed: 'true',
+          completed: true,
         },
       });
   const newTask = await findTaskById(id);

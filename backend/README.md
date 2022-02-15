@@ -138,3 +138,5 @@ Estrutura da tabela:
 - Para testar todos os arquivos juntos, digite no seu terminal:
 
 `npm test`
+
+---

@@ -29,11 +29,13 @@ A tarefa deve possuir um status editável: pendente, em andamento ou pronto;
 - `git clone git@github.com:mariananogueirab/teste-todo-list-fullstack.git`
 - Entre na pasta do repositório e depois na pasta /dev
 
-2. Instale as dependências
+2. Instale as dependências da pasta de backend e da pasta de frontend
 
 - `npm install`
 
 3. Rode a aplicação
 
-- `npm start` ou
-- `npm run dev`
+- `npm start` 
+
+Tanto na pasta de backend, quanto na pasta de frontend.
+O backend está rodando na porta 3000 e o frontend na porta 3001.

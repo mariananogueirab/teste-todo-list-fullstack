@@ -49,8 +49,7 @@ function Tasks() {
       setNewTask('');
       setNewLimitDate('');
     } catch (error) {
-      console.log(error);
-      alert(response.data.message); // não to conseguindo colocar o erro do back aqui
+      alert(error.response.data.message);
     }
   };
 
@@ -64,22 +63,19 @@ function Tasks() {
       const newtasks = tasks.filter(({ _id }) => _id !== id);
       setTasks(newtasks);
     } catch (error) {
-      console.log(error);
-      // não to conseguindo colocar o erro do back aqui
+      alert(error.response.data.message);
     }
   };
 
-  const concludedTask = async (id) => { // não tá funcionando
+  const concludedTask = async (id) => {
     try {
-      await api.put(`/tasks/completed/${id}`, {
+      await api.put(`/tasks/completed/${id}`, {}, {
         headers: {
-          authorization,
+          authorization: localStorage.getItem('authorization'),
         },
       });
-      console.log(authorization);
     } catch (error) {
-      console.log(error);
-      // não to conseguindo colocar o erro do back aqui
+      alert(error.response.data.message);
     }
   };
 
@@ -93,14 +89,12 @@ function Tasks() {
       setUpdateField({ id: '', status: false });
       setTaskForUpdate('');
       setLimitDateForUpdate('');
-      console.log(limitDateForUpdate);
     } catch (error) {
-      console.log(error);
-      // não to conseguindo colocar o erro do back aqui
+      alert(error.response.data.message);
     }
   };
 
-  const updateTask = (id, task, limitDate) => {
+  const updateTask = (id) => {
     if (updateField.status && updateField.id === id) {
       return (
         <div className="edit">
@@ -108,7 +102,7 @@ function Tasks() {
           <Input type="date" value={limitDateForUpdate} label="Edit Limit Date" onChange={({ target }) => setLimitDateForUpdate(target.value)} />
 
           <div>
-            <BsCheckLg onClick={() => update(id)} className="icon" />
+            <BsCheckLg onClick={async () => { await update(id); }} className="icon" />
             <BsXLg onClick={() => setUpdateField({ id: '', status: false })} className="icon" />
           </div>
         </div>
@@ -134,8 +128,8 @@ function Tasks() {
             <div key={_id}>{task}</div>
             <div key={`${_id}date`}>{limitDate}</div>
             <div>
-              <BsXLg onClick={() => deleteTask(_id)} className="icon" />
-              <BsCheckLg onClick={() => concludedTask(_id)} className="icon" />
+              <BsXLg onClick={async () => { await deleteTask(_id); }} className="icon" />
+              <BsCheckLg onClick={async () => { await concludedTask(_id); }} className="icon" />
               <BsPencilFill
                 className="icon"
                 onClick={() => {
@@ -146,7 +140,7 @@ function Tasks() {
               />
             </div>
           </div>
-          {updateTask(_id, task, limitDate)}
+          {updateTask(_id)}
         </div>
       ))}
       <div className="new-task">

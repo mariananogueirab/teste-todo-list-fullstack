@@ -1,4 +1,4 @@
-# Fullstack Developer Challenge - Trybe
+# Fullstack Developer Challenge - Ebytr
 
 # To Do List
 

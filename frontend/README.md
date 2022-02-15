@@ -1,4 +1,4 @@
-# Front-end Developer Challenge - Trybe
+# Front-end Developer Challenge - Ebytr
 # To Do List
 
 ## Funcionalidades:

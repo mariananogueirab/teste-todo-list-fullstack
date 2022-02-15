@@ -1,4 +1,4 @@
-# Back-end Developer Challenge - Trybe
+# Back-end Developer Challenge - Ebytr
 
 # To Do List
 

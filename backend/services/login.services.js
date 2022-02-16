@@ -7,6 +7,7 @@ const {
 } = require('../utils/dictionary/statusCode');
 const errorHandling = require('../utils/functions/errorHandling');
 const {generateToken} = require('./authService');
+const bcrypt = require('bcrypt');
 
 const loginSchema = Joi.object({
   email: Joi.string()
@@ -25,14 +26,17 @@ const getUser = async (user) => {
   const {email, password} = user;
   validateLogin(email, password);
   const userFound = await findUser(email);
-  if (!userFound || userFound.password !== password) {
+  const comp = await bcrypt.compare(password, userFound.password);
+  if (!userFound || !comp) {
     throw errorHandling(unauthorized, incorrectData);
   }
 
   const {password: _password, ...userWithoutPassword} = userFound;
 
   const token = generateToken(userWithoutPassword);
-  return token;
+
+  const {username} = userFound;
+  return {token, username};
 };
 
 module.exports = {

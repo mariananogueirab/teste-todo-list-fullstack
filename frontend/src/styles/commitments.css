@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+}
+
+.commitments {
+  display: flex;
+  flex-direction: column;
+  width: 45vw;
+}
+
+.commitment {
+  display: flex;
+  margin: 5px;
+  background-color: white;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5px;
+}
+
+.icon {
+  margin: 5px 10px;
+}
+
+.select {
+  margin: 10px;
+  padding: 2px;
+}
+
+.label-select {
+  margin-right: 15px;
+  font-size: 25px;
+}
+
+.new-commitment {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.label {
+  margin-right: 10px;
+}
+
+.icon:hover {
+  cursor: pointer;
+}
+
+.edit-commitment {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.edit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commitments h1 {
+  font-size: 30px;
+  margin-top: 20px;
+  color: #ffd43d;
+}
+
+.plus {
+  margin-left: 40px;
+}

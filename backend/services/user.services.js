@@ -4,6 +4,7 @@ const {userAlreadyRegistered} = require('../utils/dictionary/messagesDefault');
 const {badRequest, conflict} = require('../utils/dictionary/statusCode');
 const errorHandling = require('../utils/functions/errorHandling');
 const {generateToken} = require('./authService');
+const bcrypt = require('bcrypt');
 
 const createUserSchema = Joi.object({
   username: Joi.string().min(5).required(),
@@ -27,8 +28,11 @@ const validateUserAlreadyExists = async (email) => {
 const userCreate = async (user) => {
   const {username, email, password} = user;
   validateCreateUser(username, email, password);
+  const passwordEncript = await bcrypt.hash(password, 10);
+  const userEncrypt = {username, email, password: passwordEncript};
+
   await validateUserAlreadyExists(email);
-  await create(user);
+  await create(userEncrypt);
 
   const {password: _password, ...userWithoutPassword} = user;
 

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const chai = require('chai');
 const {
   describe, it, before, after,
@@ -6,17 +7,16 @@ const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 const {MongoClient} = require('mongodb');
 const {MongoMemoryServer} = require('mongodb-memory-server');
-const {getConnection} = require('./connectionMock');
 const app = require('../../index');
 const users = require('../utils/users');
-const tasks = require('../utils/tasks');
 const login = require('../utils/login');
+const commitments = require('../utils/commitments');
 
 chai.use(chaiHttp);
 
 const {expect} = chai;
 
-describe('POST /tasks', () => {
+describe('POST /commitments', () => {
   let response;
 
   const DBServer = new MongoMemoryServer();
@@ -40,7 +40,7 @@ describe('POST /tasks', () => {
   describe('Quando não é passado um JWT para autenticação', () => {
     before(async () => {
       response = await chai.request(app)
-          .post('/tasks')
+          .post('/commitments')
           .set('authorization', '');
     });
 
@@ -61,7 +61,7 @@ describe('POST /tasks', () => {
     });
   });
 
-  describe('Quando a tarefa é criada com sucesso', () => {
+  describe('Quando o compromisso é criado com sucesso', () => {
     before(async () => {
       await chai.request(app)
           .post('/user')
@@ -72,9 +72,9 @@ describe('POST /tasks', () => {
           .send(login[0]);
 
       response = await chai.request(app)
-          .post('/tasks')
+          .post('/commitments')
           .set('authorization', token.body.token)
-          .send(tasks[0]);
+          .send(commitments[0]);
     });
 
     it('retorna código de status "201"', () => {
@@ -102,10 +102,10 @@ describe('POST /tasks', () => {
           .send(login[0]);
     });
 
-    describe('quando a tarefa não é passada', () => {
+    describe('quando o compromisso não é passado', () => {
       before(async () => {
         response = await chai.request(app)
-            .post('/tasks')
+            .post('/commitments')
             .set('authorization', token.body.token)
             .send({});
       });
@@ -123,21 +123,21 @@ describe('POST /tasks', () => {
       });
 
       it(
-          'a propriedade "message" possui o texto ""task" is required"',
+          'a propriedade "message" possui o texto ""commitment" is required"',
           () => {
             expect(response.body.message)
-                .to.be.equal('"task" is required');
+                .to.be.equal('"commitment" is required');
           },
       );
     });
 
-    describe(
-        'quando a tarefa não possui o número de caracteres mínimos', () => {
+    describe('quando o compromisso não possui o número de caracteres mínimos',
+        () => {
           before(async () => {
             response = await chai.request(app)
-                .post('/tasks')
+                .post('/commitments')
                 .set('authorization', token.body.token)
-                .send(tasks[1]);
+                .send(commitments[1]);
           });
 
           it('recebe o status 400', () => {
@@ -153,11 +153,12 @@ describe('POST /tasks', () => {
           });
 
           it(
-              `a propriedade "message" possui o texto 
-              ""task" length must be at least 5 characters long"`,
+              `"message" possui o texto ""commitment" length must be at least 2 characters long"`,
               () => {
                 expect(response.body.message).to.be
-                    .equal('"task" length must be at least 5 characters long');
+                    .equal(
+                        `"commitment" length must be at least 2 characters long`,
+                    );
               },
           );
         });
@@ -165,9 +166,9 @@ describe('POST /tasks', () => {
     describe('quando o formato da data é inválido', () => {
       before(async () => {
         response = await chai.request(app)
-            .post('/tasks')
+            .post('/commitments')
             .set('authorization', token.body.token)
-            .send(tasks[2]);
+            .send(commitments[2]);
       });
 
       it('recebe o status 400', () => {
@@ -184,10 +185,10 @@ describe('POST /tasks', () => {
 
       it(
           `a propriedade "message" possui o texto 
-          ""limitDate" must be in YYYY-MM-DD format"`,
+          ""date" must be in YYYY-MM-DD format"`,
           () => {
             expect(response.body.message).to.be
-                .equal('"limitDate" must be in YYYY-MM-DD format');
+                .equal('"date" must be in YYYY-MM-DD format');
           },
       );
     });

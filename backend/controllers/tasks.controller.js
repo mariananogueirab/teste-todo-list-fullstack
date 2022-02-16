@@ -5,7 +5,7 @@ const {
   findTasksByDate,
   findTasksByStatus,
   taskUpdate,
-  taskCompletedUpdate,
+  taskStatusUpdate,
   taskDeleted,
 } = require('../services/tasks.services');
 const {created, success} = require('../utils/dictionary/statusCode');
@@ -77,10 +77,11 @@ const update = async (req, res, next) => {
   }
 };
 
-const updateCompletedTask = async (req, res, next) => {
+const updateStatusTask = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const task = await taskCompletedUpdate(id);
+    const {status} = req.body;
+    const task = await taskStatusUpdate({id, status});
 
     return res.status(success).json(task);
   } catch (error) {
@@ -107,6 +108,6 @@ module.exports = {
   getTasksByDate,
   getTasksByStatus,
   update,
-  updateCompletedTask,
+  updateStatusTask,
   taskDelete,
 };

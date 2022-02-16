@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import {
-  BsXLg, BsCheckLg, BsPlusLg, BsPencilFill,
+  BsXLg, BsCheckLg, BsPlusLg, BsPencilFill, BsFillLightningFill,
 } from 'react-icons/bs';
 import api from '../api';
 import Input from './Input';
 import '../styles/tasks.css';
 import Select from './Select';
 
+// estrela para prioridade BsFillStarFill
 function Tasks() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
   const [newLimitDate, setNewLimitDate] = useState('');
   const orderOptions = ['', 'alphabetical', 'date', 'status'];
   const [orderValue, setOrderValue] = useState('');
-  const history = useHistory();
   const authorization = localStorage.getItem('authorization');
   const [taskForUpdate, setTaskForUpdate] = useState('');
   const [limitDateForUpdate, setLimitDateForUpdate] = useState('');
@@ -22,20 +21,22 @@ function Tasks() {
     id: '',
     status: false,
   });
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(async () => {
-    if (!authorization) history.push('/get-in');
+    let response = {};
     try {
-      const response = await api.get(`/tasks/${orderValue}`, {
+      console.log('AQUI');
+      response = await api.get(`/tasks/${orderValue}`, {
         headers: {
           authorization,
         },
       });
-      setTasks(response.data);
+      if (response.data.length > 0) setTasks(response.data);
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.message);
     }
-  }, [newTask, orderValue, updateField]);
+  }, [refresh, orderValue]);
 
   const addTask = async () => {
     let response;
@@ -48,8 +49,9 @@ function Tasks() {
       setTasks([...tasks, response.data]);
       setNewTask('');
       setNewLimitDate('');
+      setRefresh((previousState) => !previousState);
     } catch (error) {
-      alert(error.response.data.message);
+      if (error) alert(error.response.data.message);
     }
   };
 
@@ -62,20 +64,35 @@ function Tasks() {
       });
       const newtasks = tasks.filter(({ _id }) => _id !== id);
       setTasks(newtasks);
+      setRefresh((previousState) => !previousState);
     } catch (error) {
-      alert(error.response.data.message);
+      if (error) alert(error.response.data.message);
     }
   };
 
-  const concludedTask = async (id) => {
+  const statusTaskCompleted = async (id) => {
     try {
-      await api.put(`/tasks/completed/${id}`, {}, {
+      await api.put(`/tasks/status/${id}`, { status: 'completed' }, {
         headers: {
           authorization: localStorage.getItem('authorization'),
         },
       });
+      setRefresh((previousState) => !previousState);
     } catch (error) {
-      alert(error.response.data.message);
+      if (error) alert(error.response.data.message);
+    }
+  };
+
+  const statusTaskInProgress = async (id) => {
+    try {
+      await api.put(`/tasks/status/${id}`, { status: 'in-progress' }, {
+        headers: {
+          authorization: localStorage.getItem('authorization'),
+        },
+      });
+      setRefresh((previousState) => !previousState);
+    } catch (error) {
+      if (error) alert(error.response.data.message);
     }
   };
 
@@ -89,8 +106,9 @@ function Tasks() {
       setUpdateField({ id: '', status: false });
       setTaskForUpdate('');
       setLimitDateForUpdate('');
+      setRefresh((previousState) => !previousState);
     } catch (error) {
-      alert(error.response.data.message);
+      if (error) alert(error.response.data.message);
     }
   };
 
@@ -122,20 +140,35 @@ function Tasks() {
         onChange={(e) => setOrderValue(e.target.value)}
       />
 
-      {tasks.map(({ _id, task, limitDate }) => (
+      {tasks.length === 0 ? <div className="noData">No tasks yet</div> : tasks.map(({
+        _id, task, limitDate, status,
+      }) => (
         <div className="edit-task">
-          <div className="task">
+          <div className={`task ${status}`}>
             <div key={_id}>{task}</div>
             <div key={`${_id}date`}>{limitDate}</div>
             <div>
-              <BsXLg onClick={async () => { await deleteTask(_id); }} className="icon" />
-              <BsCheckLg onClick={async () => { await concludedTask(_id); }} className="icon" />
+              <BsXLg onClick={async () => { await deleteTask(_id); }} className="icon" key={`${_id}X`} />
+              <BsCheckLg
+                onClick={async () => {
+                  await statusTaskCompleted(_id);
+                }}
+                className="icon"
+                key={`${_id}check`}
+              />
               <BsPencilFill
                 className="icon"
                 onClick={() => {
                   setUpdateField({ id: _id, status: true });
                   setTaskForUpdate(task);
                   setLimitDateForUpdate(limitDate);
+                }}
+                key={`${_id}pencil`}
+              />
+              <BsFillLightningFill
+                className="icon"
+                onClick={async () => {
+                  await statusTaskInProgress(_id);
                 }}
               />
             </div>
@@ -147,7 +180,7 @@ function Tasks() {
         <Input type="text" value={newTask} label="New Task" onChange={({ target }) => setNewTask(target.value)} />
         <Input type="date" value={newLimitDate} label="New Limit Date" onChange={({ target }) => setNewLimitDate(target.value)} />
 
-        <BsPlusLg onClick={addTask} className="icon" />
+        <BsPlusLg onClick={addTask} className="icon" size="35px" />
       </div>
     </div>
   );

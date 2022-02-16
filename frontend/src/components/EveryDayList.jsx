@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import {
   BsXLg, BsCheckLg, BsPlusLg, BsPencilFill,
 } from 'react-icons/bs';
@@ -13,27 +12,28 @@ function EveryDayList() {
   const [newTask, setNewTask] = useState('');
   const orderOptions = ['', 'alphabetical'];
   const [orderValue, setOrderValue] = useState('');
-  const history = useHistory();
   const authorization = localStorage.getItem('authorization');
   const [taskForUpdate, setTaskForUpdate] = useState('');
   const [updateField, setUpdateField] = useState({
     id: '',
     status: false,
   });
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(async () => {
-    if (!authorization) history.push('/get-in');
+    let response = {};
     try {
-      const response = await api.get(`/every-day/${orderValue}`, {
+      console.log('AQUI');
+      response = await api.get(`/every-day/${orderValue}`, {
         headers: {
           authorization,
         },
       });
-      setEveryDayTask(response.data);
+      if (response.data.length > 0) setEveryDayTask(response.data);
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.message);
     }
-  }, [newTask, orderValue, updateField]);
+  }, [refresh, orderValue]);
 
   const addEveryDayTask = async () => {
     let response;
@@ -45,8 +45,9 @@ function EveryDayList() {
       });
       setEveryDayTask([...tasks, response.data]);
       setNewTask('');
+      setRefresh((previousState) => !previousState);
     } catch (error) {
-      alert(error.response.data.message);
+      if (error) alert(error.response.data.message);
     }
   };
 
@@ -59,8 +60,9 @@ function EveryDayList() {
       });
       const newTasks = tasks.filter(({ _id }) => _id !== id);
       setEveryDayTask(newTasks);
+      setRefresh((previousState) => !previousState);
     } catch (error) {
-      alert(error.response.data.message);
+      if (error) alert(error.response.data.message);
     }
   };
 
@@ -73,8 +75,9 @@ function EveryDayList() {
       });
       setUpdateField({ id: '', status: false });
       setTaskForUpdate('');
+      setRefresh((previousState) => !previousState);
     } catch (error) {
-      alert(error.response.data.message);
+      if (error) alert(error.response.data.message);
     }
   };
 
@@ -102,7 +105,7 @@ function EveryDayList() {
         },
       });
     } catch (error) {
-      alert(error.response.data.message);
+      if (error) alert(error.response.data.message);
     }
   };
 
@@ -117,7 +120,7 @@ function EveryDayList() {
         onChange={(e) => setOrderValue(e.target.value)}
       />
 
-      {tasks.map(({ _id, task }) => (
+      {tasks.length === 0 ? <div className="noData">No tasks yet</div> : tasks.map(({ _id, task }) => (
         <div className="edit-task">
           <div className="task-every-day">
             <label className="label-checkbox" htmlFor={task}>
@@ -131,13 +134,14 @@ function EveryDayList() {
               {task}
             </label>
             <div>
-              <BsXLg onClick={async () => { await deleteEveryDayTask(_id); }} className="icon" />
+              <BsXLg onClick={async () => { await deleteEveryDayTask(_id); }} className="icon" key={`${_id}X`} />
               <BsPencilFill
                 className="icon"
                 onClick={() => {
                   setUpdateField({ id: _id, status: true });
                   setTaskForUpdate(task);
                 }}
+                key={`${_id}Pencil`}
               />
             </div>
           </div>
@@ -148,7 +152,7 @@ function EveryDayList() {
         <div>
           <Input type="text" value={newTask} label="New task" onChange={({ target }) => setNewTask(target.value)} />
         </div>
-        <BsPlusLg onClick={addEveryDayTask} className="icon" />
+        <BsPlusLg onClick={addEveryDayTask} className="icon" size="35px" />
       </div>
     </div>
   );

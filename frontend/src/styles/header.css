@@ -28,3 +28,11 @@
   font-size: 25px;
   margin-right: 80px;
 }
+
+.logout {
+  margin-right: 45px;
+}
+
+.logout:hover {
+  cursor: pointer;
+}

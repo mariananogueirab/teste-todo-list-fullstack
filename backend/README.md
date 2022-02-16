@@ -41,7 +41,7 @@ A API consta com 3 rotas:
   * `/date` [`GET`] Exibe as tarefas em ordem de data de criação, sendo a mais recente no topo
   * `/status` [`GET`]  Exibe as tarefas em ordem de status
   * `/:id` [`PUT`] Edita uma tarefa
-  * `/completed/:id` [`PUT`] Edita o status de uma tarefa para completa
+  * `/status/:id` [`PUT`] Edita o status de uma tarefa para completa
   * `/` [`DELETE`] Deleta uma tarefa
 
 ---
@@ -109,6 +109,7 @@ As requisições serão feitas através da rota `/tasks`.
 {
     "task": "Entregar projeto Blogs Api",
     "limitDate": "19/02/2022",
+    "status": ""
 },
 ```
 - A requisição para a atualização de uma tarefa, através da rota `/tasks/:id`, seguirá o formato:
@@ -122,9 +123,9 @@ As requisições serão feitas através da rota `/tasks`.
 
 Estrutura da tabela:
 
-|   task   |  limitDate   |  createdDate   |  completed  |   user    |
-| :------: | :----------: | :------------: | :---------: | :-------: |
-| `string` |   `string`   |    `object`    |   `boolean` |  `string` |
+|   task   |  limitDate   |  createdDate   |  completed  |   user    |  status   |
+| :------: | :----------: | :------------: | :---------: | :-------: | :-------: |
+| `string` |   `string`   |    `object`    |   `boolean` |  `string` |  `string` |
 
 
 ---

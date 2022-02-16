@@ -68,3 +68,9 @@
 .checkbox {
   margin-right: 5px;
 }
+
+.noData {
+  display: flex;
+  justify-content: center;
+  font-size: 25px;
+}

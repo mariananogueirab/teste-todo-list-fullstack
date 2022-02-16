@@ -9,7 +9,7 @@ const create = async (newTask) => {
   const db = await connect();
   const {insertedId} = await db.collection(DB_COLLECTION)
       .insertOne({
-        task, limitDate, createdDate, completed: false, user,
+        task, limitDate, createdDate, status: '', user,
       });
   return insertedId;
 };
@@ -70,12 +70,13 @@ const updateTask = async (updatedTask) => {
   return newTask;
 };
 
-const updateTaskCompleted = async (id) => {
+const updateStatus = async (updateData) => {
+  const {id, status} = updateData;
   const db = await connect();
   await db.collection(DB_COLLECTION)
       .updateOne({_id: ObjectId(id)}, {
         $set: {
-          completed: true,
+          status,
         },
       });
   const newTask = await findTaskById(id);
@@ -97,6 +98,6 @@ module.exports = {
   getAllByDate,
   getAllByStatus,
   updateTask,
-  updateTaskCompleted,
+  updateStatus,
   deleteTask,
 };

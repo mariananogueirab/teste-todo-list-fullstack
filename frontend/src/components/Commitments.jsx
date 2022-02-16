@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import {
   BsXLg, BsCheckLg, BsPlusLg, BsPencilFill,
 } from 'react-icons/bs';
@@ -14,7 +13,6 @@ function Commitments() {
   const [newDate, setNewDate] = useState('');
   const orderOptions = ['', 'date'];
   const [orderValue, setOrderValue] = useState('');
-  const history = useHistory();
   const authorization = localStorage.getItem('authorization');
   const [commitmentForUpdate, setCommitmentForUpdate] = useState('');
   const [dateForUpdate, setDateForUpdate] = useState('');
@@ -22,20 +20,22 @@ function Commitments() {
     id: '',
     status: false,
   });
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(async () => {
-    if (!authorization) history.push('/get-in');
+    let response = {};
     try {
-      const response = await api.get(`/commitments/${orderValue}`, {
+      console.log('AQUI');
+      response = await api.get(`/commitments/${orderValue}`, {
         headers: {
           authorization,
         },
       });
-      setCommitments(response.data);
+      if (response.data.length > 0) setCommitments(response.data);
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.message);
     }
-  }, [newCommitment, orderValue, updateField]);
+  }, [refresh, orderValue]);
 
   const addCommitment = async () => {
     let response;
@@ -48,8 +48,9 @@ function Commitments() {
       setCommitments([...commitments, response.data]);
       setNewCommitment('');
       setNewDate('');
+      setRefresh((previousState) => !previousState);
     } catch (error) {
-      alert(error.response.data.message);
+      if (error) alert(error.response.data.message);
     }
   };
 
@@ -62,8 +63,9 @@ function Commitments() {
       });
       const newCommitments = commitments.filter(({ _id }) => _id !== id);
       setCommitments(newCommitments);
+      setRefresh((previousState) => !previousState);
     } catch (error) {
-      alert(error.response.data.message);
+      if (error) alert(error.response.data.message);
     }
   };
 
@@ -77,8 +79,9 @@ function Commitments() {
       setUpdateField({ id: '', status: false });
       setCommitmentForUpdate('');
       setDateForUpdate('');
+      setRefresh((previousState) => !previousState);
     } catch (error) {
-      alert(error.response.data.message);
+      if (error) alert(error.response.data.message);
     }
   };
 
@@ -110,13 +113,13 @@ function Commitments() {
         onChange={(e) => setOrderValue(e.target.value)}
       />
 
-      {commitments.map(({ _id, commitment, date }) => (
+      {commitments.length === 0 ? <div className="noData">No commitments yet</div> : commitments.map(({ _id, commitment, date }) => (
         <div className="edit-commitment">
           <div className="commitment">
             <div key={_id}>{commitment}</div>
             <div key={`${_id}date`}>{date}</div>
             <div>
-              <BsXLg onClick={async () => { await deleteCommitment(_id); }} className="icon" />
+              <BsXLg onClick={async () => { await deleteCommitment(_id); }} className="icon" key={`${_id}X`} />
               <BsPencilFill
                 className="icon"
                 onClick={() => {
@@ -124,6 +127,7 @@ function Commitments() {
                   setCommitmentForUpdate(commitment);
                   setDateForUpdate(date);
                 }}
+                key={`${_id}pencil`}
               />
             </div>
           </div>
@@ -135,7 +139,7 @@ function Commitments() {
           <Input type="text" value={newCommitment} label="New commitment" onChange={({ target }) => setNewCommitment(target.value)} />
           <Input type="date" value={newDate} label="New Date" onChange={({ target }) => setNewDate(target.value)} />
         </div>
-        <BsPlusLg onClick={addCommitment} className="icon" />
+        <BsPlusLg onClick={addCommitment} className="plus" size="35px" />
       </div>
     </div>
   );

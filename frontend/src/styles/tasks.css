@@ -64,3 +64,11 @@
   margin-top: 25px;
   color: #2b475e;
 }
+
+.completed {
+  background-color: #2b475e;
+}
+
+.in-progress {
+  background-color: #B33030;
+}

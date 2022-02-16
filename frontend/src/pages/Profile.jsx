@@ -1,5 +1,6 @@
 import React from 'react';
 import Commitments from '../components/Commitments';
+import EveryDayList from '../components/EveryDayList';
 import Header from '../components/Header';
 import Tasks from '../components/Tasks';
 import '../styles/profile.css';
@@ -9,7 +10,10 @@ function Profile() {
     <div className="profile">
       <Header />
       <Tasks />
-      <Commitments />
+      <div className="lists">
+        <Commitments />
+        <EveryDayList />
+      </div>
     </div>
   );
 }

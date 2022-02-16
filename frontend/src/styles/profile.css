@@ -10,3 +10,8 @@
   padding: 15px;
   background-color: #2b475e;
 }
+
+.lists {
+  display: flex;
+  justify-content: space-between;
+}

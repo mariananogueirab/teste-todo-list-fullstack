@@ -21,12 +21,32 @@ Se o usuário já existir no banco, ele pode fazer o login.
 
 ### Profile:
 
+#### Tarefas:
+
 Mostra a lista de tarefas;
 Esta lista pode ser ordenável por ordem alfabética, data de criação ou por status;
 Insere uma nova tarefa na lista;
 Remove uma tarefa da lista;
 Atualiza uma tarefa da lista;
 A tarefa deve possuir um status editável: pendente, em andamento ou pronto;
+
+#### Eventos:
+
+Mostra a lista de eventos;
+Esta lista pode ser ordenável por ordem de data do evento;
+Insere um novo enento na lista;
+Remove um evento da lista;
+Atualiza um evento da lista;
+
+#### Tarefas do dia-a-dia:
+
+Mostra a lista de tarefas;
+Esta lista pode ser ordenável por ordem alfabética;
+Insere uma nova tarefa na lista;
+Remove uma tarefa da lista;
+Atualiza uma tarefa da lista;
+Marca uma tarefa como realizada através de um checkbox;
+
 
 ## Como instalar
 

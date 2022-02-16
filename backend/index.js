@@ -6,6 +6,7 @@ const user = require('./routes/user.router');
 const login = require('./routes/login.router');
 const tasks = require('./routes/tasks.router');
 const commitments = require('./routes/commitments.router');
+const everyDayList = require('./routes/every-day-list.router');
 
 const {PORT} = process.env;
 
@@ -17,6 +18,7 @@ app.use('/user', user);
 app.use('/login', login);
 app.use('/tasks', tasks);
 app.use('/commitments', commitments);
+app.use('/every-day', everyDayList);
 
 app.use(errorMiddleware);
 

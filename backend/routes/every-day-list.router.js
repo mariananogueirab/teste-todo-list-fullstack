@@ -17,6 +17,6 @@ router.get('/', auth, getTasks);
 router.get('/alphabetical', auth, getTasksByAlphab);
 router.put('/:id', auth, update);
 router.put('/checked/:id', auth, updateCompletedTask);
-router.delete('/', auth, taskDelete);
+router.delete('/:id', auth, taskDelete);
 
 module.exports = router;

@@ -53,10 +53,11 @@ const updateTask = async (updatedTask) => {
 
 const updateTaskCompleted = async (id) => {
   const db = await connect();
+  const task = await findTaskById(id);
   await db.collection(DB_COLLECTION)
       .updateOne({_id: ObjectId(id)}, {
         $set: {
-          checked: true,
+          checked: !task.checked,
         },
       });
   const newTask = await findTaskById(id);

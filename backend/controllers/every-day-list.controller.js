@@ -1,23 +1,21 @@
 const {
-  taskCreate,
+  everyDayTaskCreate,
   findTasks,
   findTasksByAlphab,
-  findTasksByDate,
-  findTasksByStatus,
   taskUpdate,
-  taskStatusUpdate,
+  taskCompletedUpdate,
   taskDeleted,
-} = require('../services/tasks.services');
+} = require('../services/every-day-list.services');
 const {created, success} = require('../utils/dictionary/statusCode');
 
-const createTask = async (req, res, next) => {
+const createEveryDayTask = async (req, res, next) => {
   const {user} = req;
   try {
     const newTask = {
       ...req.body,
       user: user.email,
     };
-    const id = await taskCreate(newTask);
+    const id = await everyDayTaskCreate(newTask);
 
     return res.status(created).json({_id: id, ...newTask});
   } catch (error) {
@@ -45,26 +43,6 @@ const getTasksByAlphab = async (req, res, next) => {
   }
 };
 
-const getTasksByDate = async (req, res, next) => {
-  const {user} = req;
-  try {
-    const tasks = await findTasksByDate(user.email);
-    return res.status(success).json(tasks);
-  } catch (error) {
-    next(error);
-  }
-};
-
-const getTasksByStatus = async (req, res, next) => {
-  const {user} = req;
-  try {
-    const tasks = await findTasksByStatus(user.email);
-    return res.status(success).json(tasks);
-  } catch (error) {
-    next(error);
-  }
-};
-
 const update = async (req, res, next) => {
   try {
     const {user} = req;
@@ -77,11 +55,10 @@ const update = async (req, res, next) => {
   }
 };
 
-const updateStatusTask = async (req, res, next) => {
+const updateCompletedTask = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const {status} = req.body;
-    const task = await taskStatusUpdate({id, status});
+    const task = await taskCompletedUpdate(id);
 
     return res.status(success).json(task);
   } catch (error) {
@@ -100,14 +77,11 @@ const taskDelete = async (req, res, next) => {
   }
 };
 
-
 module.exports = {
-  createTask,
+  createEveryDayTask,
   getTasks,
   getTasksByAlphab,
-  getTasksByDate,
-  getTasksByStatus,
   update,
-  updateStatusTask,
+  updateCompletedTask,
   taskDelete,
 };

@@ -7,4 +7,6 @@ module.exports = {
   incorrectData: 'Incorrect login',
   noTasksYet: 'No tasks yet',
   taskNotFound: 'Task not found',
+  noCommitmentsYet: 'No commitments yet',
+  commitmentNotFound: 'Commitment not found',
 };

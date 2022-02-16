@@ -1,26 +1,22 @@
 const express = require('express');
 const {
-  createTask,
+  createEveryDayTask,
   getTasks,
   getTasksByAlphab,
-  getTasksByDate,
-  getTasksByStatus,
   update,
-  updateStatusTask,
+  updateCompletedTask,
   taskDelete,
-} = require('../controllers/tasks.controller');
+} = require('../controllers/every-day-list.controller');
 const auth = require('../middlewares/auth');
 
 // eslint-disable-next-line new-cap
 const router = express.Router();
 
-router.post('/', auth, createTask);
-router.get('/alphabetical', auth, getTasksByAlphab);
-router.get('/date', auth, getTasksByDate);
-router.put('/status/:id', auth, updateStatusTask);
-router.get('/status', auth, getTasksByStatus);
+router.post('/', auth, createEveryDayTask);
 router.get('/', auth, getTasks);
+router.get('/alphabetical', auth, getTasksByAlphab);
 router.put('/:id', auth, update);
+router.put('/checked/:id', auth, updateCompletedTask);
 router.delete('/:id', auth, taskDelete);
 
 module.exports = router;

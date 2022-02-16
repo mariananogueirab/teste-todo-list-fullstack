@@ -113,7 +113,7 @@ function Tasks() {
 
   return (
     <div className="tasks">
-
+      <h1>Tasks</h1>
       <Select
         label="Ordenar por"
         options={orderOptions}

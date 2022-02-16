@@ -4,15 +4,13 @@
   font-size: 20px;
 }
 
-.tasks {
+.commitments {
   display: flex;
   flex-direction: column;
-  padding: 15px;
-  border-bottom: 1px solid #ffd43d;
-  background-color: #ffd43d;
+  width: 45vw;
 }
 
-.task {
+.commitment {
   display: flex;
   margin: 5px;
   background-color: white;
@@ -35,10 +33,10 @@
   font-size: 25px;
 }
 
-.new-task {
+.new-commitment {
   display: flex;
-  justify-content: space-around;
   margin-top: 20px;
+  align-items: center;
 }
 
 .label {
@@ -49,18 +47,20 @@
   cursor: pointer;
 }
 
-.edit-task {
+.edit-commitment {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .edit {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
-.tasks h1 {
+.commitments h1 {
   font-size: 30px;
-  margin-top: 25px;
-  color: #2b475e;
+  margin-top: 20px;
+  color: #ffd43d;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-/* import Commitments from '../components/Commitments'; */
+import Commitments from '../components/Commitments';
 import Header from '../components/Header';
 import Tasks from '../components/Tasks';
 import '../styles/profile.css';
@@ -9,7 +9,7 @@ function Profile() {
     <div className="profile">
       <Header />
       <Tasks />
-      {/* <Commitments /> */}
+      <Commitments />
     </div>
   );
 }

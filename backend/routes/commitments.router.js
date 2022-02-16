@@ -14,7 +14,7 @@ const router = express.Router();
 router.post('/', auth, createCommitment);
 router.get('/', auth, getCommitments);
 router.get('/date', auth, getCommitmentsByDate);
-router.put('/:id', update);
-router.delete('/:id', commitmentDelete);
+router.put('/:id', auth, update);
+router.delete('/:id', auth, commitmentDelete);
 
 module.exports = router;

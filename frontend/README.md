@@ -68,6 +68,18 @@ Marca uma tarefa como realizada através de um checkbox;
 
 ---
 
-Foi utilizado para o desenvolvimento desse projeto o React.
+Foi utilizado para o desenvolvimento desse projeto o React, e RTL para os testes.
+
+---
+
+## Para testar o projeto
+
+- Para testar os arquivos separadamente, digite no seu terminal:
+
+`npm test <nome_do_arquivo>`
+
+- Para testar todos os arquivos juntos, digite no seu terminal:
+
+`npm test`
 
 ---

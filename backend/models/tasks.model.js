@@ -9,7 +9,7 @@ const create = async (newTask) => {
   const db = await connect();
   const {insertedId} = await db.collection(DB_COLLECTION)
       .insertOne({
-        task, limitDate, createdDate, status: '', user,
+        task, limitDate, createdDate, status: 'pending', user,
       });
   return insertedId;
 };

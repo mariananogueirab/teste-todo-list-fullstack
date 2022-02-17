@@ -26,7 +26,6 @@ function Tasks() {
   useEffect(async () => {
     let response = {};
     try {
-      console.log('AQUI');
       response = await api.get(`/tasks/${orderValue}`, {
         headers: {
           authorization,
@@ -135,7 +134,7 @@ function Tasks() {
       <Select
         label="Ordenar por"
         options={orderOptions}
-        testid="column-filter"
+        testid="order-filter"
         value={orderValue}
         onChange={(e) => setOrderValue(e.target.value)}
       />
@@ -145,7 +144,7 @@ function Tasks() {
       }) => (
         <div className="edit-task">
           <div className={`task ${status}`}>
-            <div key={_id}>{task}</div>
+            <div key={_id} data-testid="task-div">{task}</div>
             <div key={`${_id}date`}>{limitDate}</div>
             <div>
               <BsXLg onClick={async () => { await deleteTask(_id); }} className="icon" key={`${_id}X`} />
@@ -177,10 +176,10 @@ function Tasks() {
         </div>
       ))}
       <div className="new-task">
-        <Input type="text" value={newTask} label="New Task" onChange={({ target }) => setNewTask(target.value)} />
-        <Input type="date" value={newLimitDate} label="New Limit Date" onChange={({ target }) => setNewLimitDate(target.value)} />
+        <Input type="text" value={newTask} label="New Task" onChange={({ target }) => setNewTask(target.value)} testid="new-task-input" />
+        <Input type="date" value={newLimitDate} label="New Limit Date" onChange={({ target }) => setNewLimitDate(target.value)} testid="new-date-input" />
 
-        <BsPlusLg onClick={addTask} className="icon" size="35px" />
+        <BsPlusLg onClick={addTask} className="icon" size="35px" data-testid="plus-new-task-btn" />
       </div>
     </div>
   );

@@ -108,7 +108,7 @@ function Commitments() {
       <Select
         label="Ordenar por"
         options={orderOptions}
-        testid="column-filter"
+        testid="order-filter"
         value={orderValue}
         onChange={(e) => setOrderValue(e.target.value)}
       />
@@ -136,10 +136,10 @@ function Commitments() {
       ))}
       <div className="new-commitment">
         <div>
-          <Input type="text" value={newCommitment} label="New commitment" onChange={({ target }) => setNewCommitment(target.value)} />
-          <Input type="date" value={newDate} label="New Date" onChange={({ target }) => setNewDate(target.value)} />
+          <Input type="text" value={newCommitment} label="New commitment" onChange={({ target }) => setNewCommitment(target.value)} testid="new-commitment-input" />
+          <Input type="date" value={newDate} label="New Date" onChange={({ target }) => setNewDate(target.value)} testid="new-date-input" />
         </div>
-        <BsPlusLg onClick={addCommitment} className="plus" size="35px" />
+        <BsPlusLg onClick={addCommitment} className="plus" size="35px" data-testid="plus-new-commitment-btn" />
       </div>
     </div>
   );

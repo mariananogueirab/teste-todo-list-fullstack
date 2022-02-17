@@ -6,7 +6,6 @@ const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 const {MongoClient} = require('mongodb');
 const {MongoMemoryServer} = require('mongodb-memory-server');
-const {getConnection} = require('./connectionMock');
 const app = require('../../index');
 const getTasks = require('../utils/getTasks');
 const users = require('../utils/users');

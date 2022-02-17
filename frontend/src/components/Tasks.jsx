@@ -145,7 +145,7 @@ function Tasks() {
         <div className="edit-task">
           <div className={`task ${status}`}>
             <div key={_id} data-testid="task-div">{task}</div>
-            <div key={`${_id}date`}>{limitDate}</div>
+            <div key={`${_id}date`}>{`Até  ${limitDate}`}</div>
             <div>
               <BsXLg onClick={async () => { await deleteTask(_id); }} className="icon" key={`${_id}X`} />
               <BsCheckLg

@@ -115,7 +115,7 @@ function EveryDayList() {
       <Select
         label="Ordenar por"
         options={orderOptions}
-        testid="column-filter"
+        testid="order-filter"
         value={orderValue}
         onChange={(e) => setOrderValue(e.target.value)}
       />
@@ -150,9 +150,9 @@ function EveryDayList() {
       ))}
       <div className="new-task">
         <div>
-          <Input type="text" value={newTask} label="New task" onChange={({ target }) => setNewTask(target.value)} />
+          <Input type="text" value={newTask} label="New task" onChange={({ target }) => setNewTask(target.value)} testid="new-task-input" />
         </div>
-        <BsPlusLg onClick={addEveryDayTask} className="icon" size="35px" />
+        <BsPlusLg onClick={addEveryDayTask} className="icon" size="35px" data-testid="plus-new-task-btn" />
       </div>
     </div>
   );

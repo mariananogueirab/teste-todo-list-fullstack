@@ -19,9 +19,9 @@ function Header() {
 
       <img src={logo} alt="logo" />
 
-      <div className="username">{username}</div>
+      <div className="username" data-testid="username-testid">{username}</div>
 
-      <BiLogOut onClick={handleLogout} className="logout" size="60px" />
+      <BiLogOut onClick={handleLogout} className="logout" size="60px" data-testid="logout-testid" />
 
     </header>
   );

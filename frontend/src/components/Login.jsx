@@ -38,7 +38,7 @@ function Login() {
           label="E-mail"
           className="input"
           type="email"
-          testid="input-email"
+          testid="email-input"
           value={login.email}
           onChange={({ target }) => {
             setLogin({ ...login, email: target.value });
@@ -48,7 +48,7 @@ function Login() {
           label="Senha"
           className="input"
           type="password"
-          testid="input-password"
+          testid="password-input"
           value={login.password}
           onChange={({ target }) => {
             setLogin({ ...login, password: target.value });

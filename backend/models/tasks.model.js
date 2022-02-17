@@ -44,7 +44,7 @@ const getAllByStatus = async (user) => {
   const db = await connect();
   const tasks = await db.collection(DB_COLLECTION)
       .find({user})
-      .sort({completed: 1})
+      .sort({status: -1})
       .toArray();
   return tasks;
 };
